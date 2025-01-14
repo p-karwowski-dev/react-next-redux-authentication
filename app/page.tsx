@@ -1,15 +1,12 @@
 export default function IndexPage() {
   return (
     <div>
-      <h1>
-        Welcome to demo of user authentication for Next.js and Redux based
-        applications
-      </h1>
+      <h1>User authentication for Next.js and Redux.js based app</h1>
       <p>
         Page with restricted content will be available after successful user
         authentication.
       </p>
-      <p>Blow steps explain how to use the app.</p>
+      <p>Below steps explain how to use the app.</p>
       <ol>
         <li>Register user</li>
         <li>Login to the account</li>
