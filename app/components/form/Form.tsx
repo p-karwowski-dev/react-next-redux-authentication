@@ -1,7 +1,7 @@
 'use client'
 import { FormEvent, useState } from 'react'
 import styles from './Form.module.css'
-import { formValidation } from './formValidation'
+import { formValidation } from './formUtils'
 
 interface iForm {
   onSubmit: (e: FormData) => void
@@ -34,7 +34,7 @@ export function Form({ onSubmit, type }: iForm) {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <label htmlFor="userLogin">User login</label>
-      <input id="userLogin" name="login" />
+      <input id="userLogin" name="username" />
       <label htmlFor="password">Password</label>
       <input id="password" name="password" />
       {type === 'signup' && (
