@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { ObjectId } from 'mongodb'
 
 interface UserLogin {
   username: string
@@ -6,15 +7,15 @@ interface UserLogin {
 }
 
 interface MeApiResponse {
-  id: number
-  username: string
-  email: string
-  firstName: string
-  lastName: string
-  gender: string
-  image: string
-  bearerToken: string
-  refreshToken: string
+  success: boolean
+  data: {
+    user: {
+      userId: ObjectId
+      username: string
+      city: string
+      age: number
+    }
+  }
 }
 
 export const authApiSlice = createApi({
@@ -22,7 +23,7 @@ export const authApiSlice = createApi({
     baseUrl: 'http://localhost:3000/api/',
   }),
   reducerPath: 'authApi',
-  tagTypes: ['Auth'],
+  tagTypes: ['UserInfo'],
   endpoints: (build) => ({
     login: build.mutation<void, UserLogin>({
       query: (userLogin) => ({
@@ -30,32 +31,29 @@ export const authApiSlice = createApi({
         method: 'POST',
         body: userLogin,
       }),
-      invalidatesTags: ['Auth'],
     }),
     refreshLogin: build.mutation<void, void>({
       query: () => ({
         url: 'auth/refresh',
         method: 'POST',
       }),
-      invalidatesTags: ['Auth'],
     }),
     getMe: build.query<MeApiResponse, void>({
       query: () => 'auth/me',
-      providesTags: ['Auth'],
+      providesTags: ['UserInfo'],
     }),
     logout: build.mutation<void, void>({
       query: () => ({
         url: 'auth/logout',
         method: 'DELETE',
       }),
-      invalidatesTags: ['Auth'],
+      invalidatesTags: ['UserInfo'],
     }),
     expireBearer: build.mutation<void, void>({
       query: () => ({
         url: 'auth/expireBearer',
         method: 'DELETE',
       }),
-      invalidatesTags: ['Auth'],
     }),
   }),
 })
