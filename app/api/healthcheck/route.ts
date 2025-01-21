@@ -4,10 +4,10 @@ import clientPromise from '@/lib/mongodb'
 export const GET = async () => {
   try {
     let client = await clientPromise
-    console.log('MongoDB connected successfully!')
+    console.info('MongoDB connected successfully!')
 
     const db = client.db('authProject')
-    console.log('Connected to database:', db.databaseName)
+    console.info('Connected to database:', db.databaseName)
 
     return NextResponse.json({
       message: 'MongoDB connection successful',
