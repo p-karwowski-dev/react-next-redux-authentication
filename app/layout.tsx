@@ -1,13 +1,13 @@
-import Image from "next/image";
-import type { ReactNode } from "react";
-import { StoreProvider } from "./StoreProvider";
-import { Nav } from "./components/Nav";
+import Image from 'next/image'
+import type { ReactNode } from 'react'
+import { StoreProvider } from './StoreProvider'
+import { Nav } from './components/Nav'
 
-import "./styles/globals.css";
-import styles from "./styles/layout.module.css";
+import './styles/globals.css'
+import styles from './styles/layout.module.css'
 
 interface Props {
-  readonly children: ReactNode;
+  readonly children: ReactNode
 }
 
 export default function RootLayout({ children }: Props) {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Props) {
     <StoreProvider>
       <html lang="en">
         <body>
-          <section className={styles.container}>
+          <div className={styles.container}>
             <Nav />
 
             <header className={styles.header}>
@@ -29,10 +29,9 @@ export default function RootLayout({ children }: Props) {
             </header>
 
             <main className={styles.main}>{children}</main>
-            
-          </section>
+          </div>
         </body>
       </html>
     </StoreProvider>
-  );
+  )
 }

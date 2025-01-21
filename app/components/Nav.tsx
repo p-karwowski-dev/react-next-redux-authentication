@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
 import styles from '../styles/layout.module.css'
+import { useLogoutMutation } from '@/lib/features/auth/authApiSlice'
 
 export const Nav = () => {
   const pathname = usePathname()
+  const [logout] = useLogoutMutation()
 
   return (
     <nav className={styles.nav}>
@@ -26,19 +27,14 @@ export const Nav = () => {
       </Link>
       <Link
         className={`${styles.link} ${
-          pathname === '/signup' ? styles.active : ''
-        }`}
-        href="/signup"
-      >
-        Signup
-      </Link>
-      <Link
-        className={`${styles.link} ${
           pathname === '/restricted' ? styles.active : ''
         }`}
         href="/restricted"
       >
         Restricted content
+      </Link>
+      <Link onClick={() => logout()} className={styles.link} href="/">
+        Logout
       </Link>
     </nav>
   )
