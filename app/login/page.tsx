@@ -1,9 +1,9 @@
 'use client'
-import { useLoginMutation } from '@/lib/features/authentication/authApiSlice'
+import { useLoginMutation } from '@/lib/features/auth/authApiSlice'
 import { Form } from '../components/form/Form'
 
 export default function LoginPage() {
-  const [login, { data, isLoading, isError, isSuccess }] = useLoginMutation()
+  const [login, { isLoading, isError, isSuccess }] = useLoginMutation()
 
   const handleForm = (formData: FormData) => {
     const username = formData.get('username') as string
