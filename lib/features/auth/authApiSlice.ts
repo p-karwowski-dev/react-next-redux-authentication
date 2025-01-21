@@ -32,12 +32,6 @@ export const authApiSlice = createApi({
         body: userLogin,
       }),
     }),
-    refreshLogin: build.mutation<void, void>({
-      query: () => ({
-        url: 'auth/refresh',
-        method: 'POST',
-      }),
-    }),
     getMe: build.query<MeApiResponse, void>({
       query: () => 'auth/me',
       providesTags: ['UserInfo'],
@@ -61,7 +55,6 @@ export const authApiSlice = createApi({
 export const {
   useLoginMutation,
   useGetMeQuery,
-  useRefreshLoginMutation,
   useLogoutMutation,
   useExpireBearerMutation,
 } = authApiSlice
