@@ -13,7 +13,7 @@ export const ExpireButton = () => {
         expireToken()
       }}
     >
-      Simulate expired bearer token
+      Expire short session
     </button>
   )
 }

@@ -31,6 +31,7 @@ export const authApiSlice = createApi({
         method: 'POST',
         body: userLogin,
       }),
+      invalidatesTags: ['UserInfo'],
     }),
     getMe: build.query<MeApiResponse, void>({
       query: () => 'auth/me',
@@ -48,6 +49,7 @@ export const authApiSlice = createApi({
         url: 'auth/expireBearer',
         method: 'DELETE',
       }),
+      invalidatesTags: ['UserInfo'],
     }),
   }),
 })
