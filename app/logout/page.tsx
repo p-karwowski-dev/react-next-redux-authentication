@@ -1,8 +1,5 @@
 'use client'
-import {
-  useGetMeQuery,
-  useLogoutMutation,
-} from '@/lib/features/auth/authApiSlice'
+import { useLogoutMutation } from '@/lib/features/auth/authApiSlice'
 import { useEffect } from 'react'
 
 export default function RestrictedPage() {
@@ -16,10 +13,7 @@ export default function RestrictedPage() {
     <>
       <h1>Logout</h1>
       {isSuccess ? (
-        <p>
-          You have to be logged out - both short and long session tokens has
-          been removed.
-        </p>
+        <p>You are logged out, both short and long session have been closed.</p>
       ) : (
         <p>Something went wrong, you are still logged in.</p>
       )}

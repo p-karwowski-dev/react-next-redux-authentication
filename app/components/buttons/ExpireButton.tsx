@@ -4,7 +4,12 @@ export const ExpireButton = () => {
   const [expireToken, { isSuccess }] = useExpireBearerMutation()
 
   if (isSuccess) {
-    return <p>Short session has expired.</p>
+    return (
+      <p>
+        Short session was closed and reopened. See network tab in developer
+        tool.
+      </p>
+    )
   }
 
   return (

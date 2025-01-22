@@ -33,7 +33,12 @@ export const Nav = () => {
       >
         Restricted content
       </Link>
-      <Link onClick={() => logout()} className={styles.link} href="/">
+      <Link
+        className={`${styles.link} ${
+          pathname === '/restricted' ? styles.active : ''
+        }`}
+        href="/logout"
+      >
         Logout
       </Link>
     </nav>

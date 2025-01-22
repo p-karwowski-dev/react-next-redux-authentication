@@ -1,6 +1,6 @@
 import clientPromise from '@/lib/mongodb'
 import { NextRequest, NextResponse } from 'next/server'
-import { decrypt } from '@/lib/session'
+import { decrypt, deleteSession } from '@/lib/session'
 import { UserDetails } from '@/lib/types/user'
 
 export async function GET(request: NextRequest) {

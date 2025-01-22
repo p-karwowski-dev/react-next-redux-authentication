@@ -60,12 +60,12 @@ export default function IndexPage() {
         <b>Steps to test authentication.</b>
       </p>
       <ol>
-        <li>Login to the account (login: Joe, password: pass)</li>
-        <li>Open 'Restricted' page</li>
-        <li>Click a button to expire authentication token</li>
-        <li>
-          Refresh page watching network in dev tool to see '/refresh' request
-        </li>
+        <li>Login to the account (login: Joe, password: pass).</li>
+        <li>Open 'Restricted' page.</li>
+        <li>Open network tab in developer tool.</li>
+        <li>Click a button to expire authentication token.</li>
+        <li>Observe sent and received requests.</li>
+        <li>Logout from the app.</li>
       </ol>
     </section>
   )

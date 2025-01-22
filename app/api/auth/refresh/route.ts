@@ -5,14 +5,13 @@ import {
   decrypt,
   ExtendedSessionPayload,
 } from '@/lib/session'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: Request) {
-  const cookieStore = await cookies()
-  const refreshToken = cookieStore.get('longSession')?.value
+export async function GET(request: NextRequest) {
+  const refreshToken = request.cookies.get('longSession')?.value
 
   if (!refreshToken) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.json({}, { status: 401 })
   }
 
   try {
@@ -22,10 +21,13 @@ export async function GET(request: Request) {
     await createShortSession(sessionPayload)
     await createLongSession(sessionPayload)
   } catch {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.json({}, { status: 401 })
   }
 
-  const url = new URL(request.url, request.url)
-  const originalUrl = url.searchParams.get('originalUrl') || '/login'
-  return NextResponse.redirect(new URL(originalUrl, request.url))
+  return NextResponse.json(
+    {
+      success: true,
+    },
+    { status: 200 }
+  )
 }
