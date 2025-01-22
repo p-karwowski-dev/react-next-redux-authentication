@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { ObjectId } from 'mongodb'
+import { appFetchBaseQuery } from '../../appFetchBaseQuery'
 
 interface UserLogin {
   username: string
@@ -19,9 +20,7 @@ interface MeApiResponse {
 }
 
 export const authApiSlice = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api/',
-  }),
+  baseQuery: appFetchBaseQuery,
   reducerPath: 'authApi',
   tagTypes: ['UserInfo'],
   endpoints: (build) => ({
