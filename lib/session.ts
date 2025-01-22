@@ -10,7 +10,7 @@ interface SessionPayload {
 
 export interface ExtendedSessionPayload extends SessionPayload {
   sessionType: SessionType
-  expiresAt: Date
+  expireDate: Date
   expiresIn: string | number
 }
 
@@ -21,10 +21,10 @@ const sessionKey = new TextEncoder().encode(
 )
 
 export async function encrypt(
-  sessionPayload: ExtendedSessionPayload
+  sessionPayload: SessionPayload,
+  expiresIn: string
 ): Promise<string> {
-  const { expiresIn, userId, username } = sessionPayload
-  const token = await new SignJWT({ userId, username })
+  const token = await new SignJWT({ ...sessionPayload })
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .setIssuedAt()
     .setExpirationTime(expiresIn)
@@ -48,41 +48,36 @@ export async function decrypt(
   }
 }
 
-async function createSession(payload: ExtendedSessionPayload) {
-  const sessionToken = await encrypt(payload)
+async function setCookie(
+  sessionType: SessionType,
+  sessionToken: string,
+  expires: Date
+) {
   const cookieStore = await cookies()
-  const path = payload.sessionType === 'longSession' ? '/refresh' : '/'
+  const path = sessionType === 'longSession' ? '/api/auth/refresh' : '/'
 
-  cookieStore.set(payload.sessionType, sessionToken, {
+  cookieStore.set(sessionType, sessionToken, {
     httpOnly: true,
     secure: false,
-    expires: payload.expiresAt,
+    expires,
     sameSite: 'lax',
     path,
   })
 }
 
 export async function deleteSession(sessionType: SessionType): Promise<void> {
-  const cookieStore = await cookies()
-  cookieStore.delete(sessionType)
+  const expireDate = new Date(Date.now())
+  await setCookie(sessionType, '', expireDate)
 }
 
 export async function createLongSession(payload: SessionPayload) {
-  const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
-  return createSession({
-    ...payload,
-    expiresAt,
-    expiresIn: '1d',
-    sessionType: 'longSession',
-  })
+  const expireDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
+  const sessionToken = await encrypt(payload, '1d')
+  await setCookie('longSession', sessionToken, expireDate)
 }
 
 export async function createShortSession(payload: SessionPayload) {
-  const expiresAt = new Date(Date.now() + 60 * 60 * 1000)
-  return createSession({
-    ...payload,
-    expiresAt,
-    expiresIn: '1h',
-    sessionType: 'shortSession',
-  })
+  const expireDate = new Date(Date.now() + 60 * 60 * 1000)
+  const sessionToken = await encrypt(payload, '1h')
+  await setCookie('shortSession', sessionToken, expireDate)
 }
