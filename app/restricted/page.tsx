@@ -9,9 +9,9 @@ export default function RestrictedPage() {
   return (
     <>
       <h1>Restricted content</h1>
-      <ExpireButton />
       {isSuccess ? (
         <>
+          <ExpireButton />
           <div>
             <h4>User information:</h4>
             <p>UserId: {userId?.toString()}</p>
@@ -21,7 +21,7 @@ export default function RestrictedPage() {
           </div>
         </>
       ) : (
-        <p>User is not authorized. Refresh the page.</p>
+        <p>Log in to the app to get the access.</p>
       )}
     </>
   )

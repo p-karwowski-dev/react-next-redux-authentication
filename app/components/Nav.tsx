@@ -35,7 +35,7 @@ export const Nav = () => {
       </Link>
       <Link
         className={`${styles.link} ${
-          pathname === '/restricted' ? styles.active : ''
+          pathname === '/logout' ? styles.active : ''
         }`}
         href="/logout"
       >

@@ -6,8 +6,8 @@ export const ExpireButton = () => {
   if (isSuccess) {
     return (
       <p>
-        Short session was closed and reopened. See network tab in developer
-        tool.
+        Short session was closed and reopened. Check the network tab in
+        developer tool.
       </p>
     )
   }
